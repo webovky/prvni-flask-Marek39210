@@ -1,11 +1,12 @@
-{% extends 'base.html.j2' %}
+{% extends 'base.html' %}
 
 {%block title%}Informace{%endblock%}
 
 {% block obsah %}
 
-<h1>Info</h1>
+<h1>Zelí</h1>
+<p><img src="{{ url_for('static', filename='zeli.jpg') }}" /></p>
 
-<p>2 na 128 je {{2**128}}</p>
+<p>Kyselý zelí je dobrý</p>
 
 {% endblock obsah %}
