@@ -36,7 +36,7 @@ def info():
 def abc():
     return render_template("abc.html", slova=slova)
 
-@app.route("/Kyselý_zelí/")
+@app.route("/Kyselý_zelí/", methods = ['GET', 'POST'])
 def kyselyzeli():
     return render_template("kyselyzeli.html", slova=slova)
 
