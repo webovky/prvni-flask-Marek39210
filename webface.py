@@ -1,3 +1,4 @@
+from curses import keyname
 from flask import Flask, render_template, request, redirect, url_for, session
 import functools
 
@@ -38,7 +39,17 @@ def abc():
 
 @app.route("/Kyselý_zelí/", methods = ['GET', 'POST'])
 def kyselyzeli():
-    return render_template("kyselyzeli.html", slova=slova)
+    hmotnost = request.args.get('hmotnost')
+    výška = request.args.get('výška')
+
+    print(hmotnost, výška)
+
+    if hmotnost != None and výška != None:
+        bmi = (int(hmotnost)/((int(výška)/100)**2))
+    else:
+        bmi = 0
+
+    return render_template("kyselyzeli.html", bmi = bmi)
 
 
 @app.route("/text/")

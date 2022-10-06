@@ -4,14 +4,21 @@
 
 {% block obsah %}
 
-<h1>Malina</h1>
+<h1>Kyselý zelí a BMI</h1>
 <h2>Formulář:</h2>
 
-<form action="" method = "POST">
-    <input type = "text" name ="q">
-    <input type = "password" name ="heslo">
-    <input type = "submit" value = "odeslat">
+<form action="" method = "GET">
+    <p>Hmotnost:<br><input type = "number" name ="hmotnost" placeholder = "Zadej hmotnost v kg">kg </p>
+    <p>Výška:<br><input type = "number" name ="výška" placeholder = "Zadej výšku v cm">cm</p>
+    <p><input type = "submit" value = "Vypočítej"></p>
 </form>
+
+<h2><p>Vaše BMI = {{bmi}}</p></h2>
+<p>BMI (18,5 - 25) = normální honota</p>
+<p>BMI (0 -18,5) = podvíživa</p>
+<p>BMI (25 - 30) = nadváha</p>
+<p>BMI (30 a více) = obezita</p>
+
 
 <h1>Zelí</h1>
 <p><img src="{{ url_for('static', filename='zeli.jpg') }}" /></p>
