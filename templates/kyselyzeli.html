@@ -8,16 +8,48 @@
 <h2>Formulář:</h2>
 
 <form action="" method = "GET">
-    <p>Hmotnost:<br><input type = "number" name ="hmotnost" placeholder = "Zadej hmotnost v kg">kg </p>
-    <p>Výška:<br><input type = "number" name ="výška" placeholder = "Zadej výšku v cm">cm</p>
+    <p>Hmotnost:<br><input type = "number" name ="hmotnost" placeholder = "Zadej hmotnost v kg"
+        value = "{{ request.args.get('hmotnost') or '' }}">kg </p>
+    <p>Výška:<br><input type = "number" name ="výška" placeholder = "Zadej výšku v cm"
+        value = "{{request.args.get('výška')}}">cm</p>
     <p><input type = "submit" value = "Vypočítej"></p>
 </form>
 
-<h2><p>Vaše BMI = {{bmi}}</p></h2>
-<p>BMI (18,5 - 25) = normální honota</p>
-<p>BMI (0 -18,5) = podvíživa</p>
-<p>BMI (25 - 30) = nadváha</p>
-<p>BMI (30 a více) = obezita</p>
+{% if bmi != None %}
+
+<p>BMI == {{bmi}}</p>
+
+    {% if bmi < 18.5 %}
+
+    <p>BMI (0 -18,5) = podvíživa</p>
+    
+    {% elif bmi < 25 %}
+
+    <p>BMI (18,5-25) = normální váha</p>
+
+    {% elif bmi < 30 %}
+
+    <p>BMI (25-30) = nadváha</p>
+
+    {% elif bmi < 35 %}
+
+    <p>BMI (30-35) = mírná obezita</p>
+
+    {% elif bmi < 40 %}
+
+    <p>BMI (35-40) = obezita</p>
+
+    {% else %}
+
+    <p>BMI vetší než 40 = morbidní obezita</p>
+    {% endif %}
+
+
+{%else%}
+
+<p style = "color:black">"Takhle neeeee.....Je třeba zadat dvě nenulová čísla"</p>
+{% endif %}
+
 
 
 <h1>Zelí</h1>

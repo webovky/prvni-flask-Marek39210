@@ -44,10 +44,14 @@ def kyselyzeli():
 
     print(hmotnost, výška)
 
-    if hmotnost != None and výška != None:
-        bmi = (int(hmotnost)/((int(výška)/100)**2))
+    if hmotnost and výška:
+        try:
+            bmi = (int(hmotnost)/((int(výška)/100)**2))
+        except (ZeroDivisionError, ValueError):
+            bmi = None
+            #err = "Je třeba zadat dvě nenulová čísla"
     else:
-        bmi = 0
+        bmi = None
 
     return render_template("kyselyzeli.html", bmi = bmi)
 
