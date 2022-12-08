@@ -26,35 +26,42 @@
 </p>
 
 {% for category,message in get_flashed_messages(with_categories=true) %}
+<div>
 <p class="flash {{ category }}">
 <button class="hide">x</button>{{ message }}
 </p>
+</div>
 {% endfor %}
-
+      
   <nav>
   <p><img src="{{ url_for('static', filename='flask-icon.png') }}" /></p>
   <ul>
     <li><a href="{{ url_for('index') }}">Index</a></li>
     <li><a href="{{ url_for('info') }}">Info</a></li>
     <li><a href="{{ url_for('abc') }}">ABC</a></li>
-    <li><a href="{{ url_for('kyselyzeli') }}">Kyselý_zelí</a></li>
+    <li><a href="{{ url_for('malina') }}">Malina</a></li>
     <li><a href="{{ url_for('login') }}">Login</a></li>
     <li><a href="{{ url_for('logout') }}">Logout</a></li>
+    <li><a href="{{ url_for('registrace') }}">Registrace</a></li>
   </ul></nav>
 
 
 {% block obsah %}
 
-{#{% filter markdown %}#}
 
-# Flask
+<h1>Flask</h1>
 
-Startovací šablona pro webový framework Flask.
 
-![Flaštička]({{ url_for('static', filename='flask.png') }})
-![Flaštičky]({{ url_for('static', filename='flasks.png') }})
+<p>Startovací šablona pro webový framework Flask.</p>
 
-{#{% endfilter %}#}
+<p><img src="{{ url_for('static', filename='flask.png') }}" alt=""></p>
+
+<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+Laboriosam velit ut, ipsam sit a, quod et quia ducimus dolor vitae 
+recusandae! Exercitationem quae expedita cum delectus laboriosam
+minus voluptatem rerum.</p>
+
+<p><img src="{{ url_for('static', filename='flasks.png') }}" alt=""></p>
 
 
 
@@ -72,6 +79,7 @@ Užitečné odkazy:
 
 {#{% endfilter %}#}
 </footer>
+
 
 <script>
 

@@ -1,5 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, session, flash
 import functools
+from werkzeug.security import generate_password_hash, check_password_hash
+import sqlite3
 
 # from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -10,6 +12,7 @@ app.secret_key = b"x6\x87j@\xd3\x88\x0e8\xe8pM\x13\r\xafa\x8b\xdbp\x8a\x1f\xd41\
 
 slova = ("Super", "Perfekt", "Úža category", "Flask")
 
+from mysqlite import SQLite
 
 def prihlasit(function):
     @functools.wraps(function)
@@ -69,13 +72,53 @@ def login():
     print(jmeno, heslo)
     return render_template("login.html")
 
+@app.route("/registrace/", methods=["GET"])
+def registrace():
+    jmeno = request.args.get("jmeno")
+    heslo = request.args.get("heslo")
+    heslo_znovu = request.args.get("heslo_znovu")
+    print(jmeno, heslo, heslo_znovu)
+        
+    return render_template("registrace.html")
+
+@app.route("/registrace/", methods=["POST"])
+def registrace_post():
+    jmeno = request.form.get("jmeno")
+    heslo = request.form.get("heslo")
+    heslo_znovu = request.form.get("heslo_znovu")
+    
+
+
+    if not (jmeno and heslo and heslo_znovu):
+        flash('Je nutné vyplnit všchna políčka', 'error')
+        return redirect(url_for("registrace"))
+
+    if heslo != heslo_znovu:
+        flash('hesla musí být stejná', 'error')
+        return redirect(url_for("registrace"))
+    try:
+        heslo_hash = generate_password_hash(heslo)
+        with SQLite('data.db') as cur:
+            cur.execute("INSERT INTO user (login,passwd) VALUES(?,?)",[jmeno,heslo_hash])
+        session['uživatel'] = jmeno
+        return redirect(url_for('login.html'))
+    except sqlite3.IntegrityError:
+        flash("Toto jméno již existuje")
+
+    return redirect(url_for("registrace"))
+    
 
 @app.route("/login/", methods=["POST"])
 def login_post():
     jmeno = request.form.get("jmeno")
     heslo = request.form.get("heslo")
     page = request.args.get('page')
-    if jmeno == "marek" and heslo == "lokomotiva":
+
+    with SQLite('data.db') as cur:
+        cur.execute('SELECT passwd FROM user WHERE login = ?',[jmeno])
+        ans = cur.fetchall()
+
+    if ans and check_password_hash(ans[0][0],heslo):
         flash('Jsi přihlášen', 'message')
         session["uživatel"] = jmeno
         if page:
