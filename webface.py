@@ -3,6 +3,8 @@ import functools
 from werkzeug.security import generate_password_hash, check_password_hash
 import sqlite3
 from mysqlite import SQLite
+import random
+import string
 
 # from werkzeug.security import generate_password_hash, check_password_hash
 app = Flask(__name__)
@@ -32,6 +34,22 @@ def index():
 @app.route("/info/")
 def info():
     return render_template("info.html")
+
+@app.route("/Zkracovac/")
+def zkracovac():
+    return render_template("zkracovac.html")
+
+@app.route("/Zkracovac/", methods = ["POST"])
+def zkracovac_post():
+    url = request.form.get('url_adresa')
+    zkratka = ''.join(random.choices(string.ascii_uppercase + string.digits, k=5))
+    with SQLite("data.db") as cur:
+            cur.execute(
+                "INSERT INTO adresy (zkratka,adresa) VALUES (?,?)", [zkratka, url]
+            )
+    return redirect(url_for('Zkracovac'))
+
+
 
 
 @app.route("/abc/")
