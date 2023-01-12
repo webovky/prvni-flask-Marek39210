@@ -47,7 +47,7 @@ def zkracovac_post():
             cur.execute(
                 "INSERT INTO adresy (zkratka,adresa) VALUES (?,?)", [zkratka, url]
             )
-    return redirect(url_for('Zkracovac'))
+    return redirect(url_for('zkracovac'))
 
 
 
