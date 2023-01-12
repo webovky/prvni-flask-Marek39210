@@ -5,7 +5,10 @@
 
 
 
-<h1>Zkracovač URL</h1>
+{% if new  %}
+<p>Vytvořená nová zkratka: <a href = "{{new}}">{{new}}</a></p>
+
+{% endif %}
 
 <h2>formulář</h2>
 <form action="" method="POST">
